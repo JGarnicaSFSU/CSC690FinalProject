@@ -1,0 +1,6 @@
+framework module Pods_Donde {
+  umbrella header "Pods-Donde-umbrella.h"
+
+  export *
+  module * { export * }
+}
