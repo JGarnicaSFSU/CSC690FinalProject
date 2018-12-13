@@ -9,6 +9,7 @@ Must-have features:
 -Order by price and reviews. (2 Hours)
 -See details about the place (3 Hours)
 -Have a useable UI. (4 Hours)
+
 Nice-to-have features:
 -Save the place somewhere
 -Have the search function have even more parameters.
