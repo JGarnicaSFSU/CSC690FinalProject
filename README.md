@@ -1,3 +1,4 @@
+REVIEWER: Alexander Caley
 PROPOSAL: A small app that allows a user to search an defined area for food. It is designed for when you are in an area walking for example
 and want to be more specific about your search for food. Google Maps or Apple Maps along with Yelp do not have a distance parameter
 which is really frustrating if you do not want to walk far or want only search for a given along with other parameters.
