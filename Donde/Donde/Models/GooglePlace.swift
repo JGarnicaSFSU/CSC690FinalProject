@@ -19,6 +19,7 @@ class GooglePlace {
     let placeType: String
     let rating: Double?
     let open: Bool?
+    let price:Int?
     var photoReference: String?
     var photo: UIImage?
     
@@ -36,7 +37,7 @@ class GooglePlace {
         print(json)
         photoReference = json["photos"][0]["photo_reference"].string
         
-    
+        price = json["price_level"].intValue
         placeType = ""
     }
     

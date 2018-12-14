@@ -21,6 +21,7 @@ class PlaceChoseViewController:  UIViewController {
     var placeName = ""
     var markerChose = PlaceMarker?.self
     var address = ""
+    var price = 0
     var aboutTextString = ""
     var rating = 0.0
      var ourPlacesArray = [PlaceMarker]()
@@ -41,7 +42,9 @@ class PlaceChoseViewController:  UIViewController {
                 //DO NOT LOAD THE IMAGE. NO CRASHES ALLOWED
             }
             address = ourPlacesArray[chosenNum].place.address
-            aboutTextString = "This place has a "+String(rating)+"! And its at "+address
+            price = ourPlacesArray[chosenNum].place.price ?? 1
+            let priceString = getPriceString()
+            aboutTextString = "This place has a "+String(rating)+"! And its at "+address+". The cost is "+priceString+"."
             aboutText.text = aboutTextString
         }
         else{
@@ -50,6 +53,20 @@ class PlaceChoseViewController:  UIViewController {
         }
       
       
+    }
+    func getPriceString() -> String {
+        if(price<=1){
+            return "inexpensive"
+        }
+        else if (price==2){
+            return "not bad but not cheap"
+        }
+        else if(price==3){
+            return "pricey"
+        }
+        else{
+            return "EXPENSIVE"
+        }
     }
     //choose the place using chance
     func choseRandomPlace() -> Int {

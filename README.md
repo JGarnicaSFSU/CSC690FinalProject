@@ -14,3 +14,6 @@ Must-have features:
 Nice-to-have features:
 -Save the place somewhere
 -Have the search function have even more parameters.
+
+NOTE: Uses Pods GoogleMaps, GooglePlaces, SwiftyJSON
+

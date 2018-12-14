@@ -77,14 +77,25 @@ class HomeMapViewController: UIViewController {
                 
                 let marker = PlaceMarker(place: $0)
                 /*
-                    Only the finest places for our users
+                    Only the finest places for our users.
+                    ALSO THE PLACES MUST BE CHEAP!!!
+                 
                 */
                // place must be OPEN and have good ratings
                 if let open = marker.place.open , open == true {
-                    if let rating = marker.place.rating , rating > 3.5 {
-                        self.placesArray.append(marker)
-                         marker.map = self.ourMapView
+                    if let price = marker.place.price , price < 3{
+                        if let rating = marker.place.rating , rating > 3.5 {
+                            self.placesArray.append(marker)
+                            marker.map = self.ourMapView
+                        }
+                    }else{
+                        // It otherwise better be VERY VERY delicious 
+                        if let rating = marker.place.rating , rating > 4.8 {
+                            self.placesArray.append(marker)
+                            marker.map = self.ourMapView
+                        }
                     }
+                   
                 }
 
                 
