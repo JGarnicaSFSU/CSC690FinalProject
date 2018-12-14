@@ -6,10 +6,17 @@
 //  Copyright © 2018 Jesus Garnica. All rights reserved.
 //
 
+
+/*
+  This class is for managing the main view such as the map and buttons
+ 
+ */
 import UIKit
 import GooglePlaces
 import GoogleMaps
 class HomeMapViewController: UIViewController {
+    
+    // Change how far we should search
     @IBAction func rangeButtonPressed(_ sender: Any) {
         if(searchRadius<1500){
             rangeButton.title = "Farther"
@@ -17,7 +24,7 @@ class HomeMapViewController: UIViewController {
         }
         else{
             rangeButton.title = "Near"
-            searchRadius = 750
+            searchRadius = 500
             
         }
        
@@ -25,6 +32,7 @@ class HomeMapViewController: UIViewController {
 
         
     }
+    // We will attempt to pick a place
     @IBAction func pickPressed(_ sender: Any) {
          performSegue(withIdentifier: "placeChosenSegue", sender: self)
     }
@@ -47,10 +55,10 @@ class HomeMapViewController: UIViewController {
     private let dataProvider = GoogleDataProvider()
     private let locationManager = CLLocationManager()
    
-    private var searchRadius: Int = 750  //HOW BIG TO SEARCH
+    private var searchRadius: Int = 500  //HOW BIG TO SEARCH
     
     @IBOutlet weak var ourMapView: GMSMapView!
-    var foodTypes = ["bakery", "italian", "cafe", "coffee", "mexican","Food","restaurant","tacos","burritos","falafel","bar"]
+    var foodTypes = ["bar","cafe","Food","restaurant"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,9 +79,9 @@ class HomeMapViewController: UIViewController {
                 /*
                     Only the finest places for our users
                 */
-               
+               // place must be OPEN and have good ratings
                 if let open = marker.place.open , open == true {
-                    if let rating = marker.place.rating , rating > 3.75 {
+                    if let rating = marker.place.rating , rating > 3.5 {
                         self.placesArray.append(marker)
                          marker.map = self.ourMapView
                     }
@@ -88,7 +96,10 @@ class HomeMapViewController: UIViewController {
     
    
 }
-
+/*
+    This extension is for grabbing the user location and taking action when location
+    changes
+ */
 extension HomeMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

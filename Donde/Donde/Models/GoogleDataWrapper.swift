@@ -11,6 +11,12 @@ import Foundation
 import CoreLocation
 import SwiftyJSON
 
+/*
+    This class actually grabs and parses the data from the API
+    using SwiftyJSON and Google's API
+ */
+
+
 typealias PlacesCompletion = ([GooglePlace]) -> Void
 typealias PhotoCompletion = (UIImage?) -> Void
 
@@ -21,8 +27,11 @@ class GoogleDataProvider {
         return URLSession.shared
     }
     
+    
+    // This grabs the nearby places using Google's API
     func fetchPlacesNearCoordinate(_ coordinate: CLLocationCoordinate2D, radius: Double, types: [String], completion: @escaping PlacesCompletion) -> Void {
         var urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(coordinate.latitude),\(coordinate.longitude)&radius=\(radius)&rankby=prominence&sensor=true&key=\(googleApiKey)"
+        //Combine the types availible to search
         let typesString = types.count > 0 ? types.joined(separator: "|") : "food"
         urlString += "&types=\(typesString)"
         urlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? urlString
@@ -39,7 +48,7 @@ class GoogleDataProvider {
         DispatchQueue.main.async {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
         }
-        
+        //This grabs photos  but in an Async way
         placesTask = session.dataTask(with: url) { data, response, error in
             var placesArray: [GooglePlace] = []
             defer {
@@ -71,8 +80,9 @@ class GoogleDataProvider {
         if let photo = photoCache[reference] {
             completion(photo)
         } else {
-            //typical string to get an image 
-            let urlString = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=\(reference)&key=\(googleApiKey)"
+            //typical string to get an image
+            //Cannot let max width get too big or it costs too much to load
+            let urlString = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference=\(reference)&key=\(googleApiKey)"
             guard let url = URL(string: urlString) else {
                 completion(nil)
                 return
@@ -97,7 +107,7 @@ class GoogleDataProvider {
                 guard let imageData = try? Data(contentsOf: url) else {
                     return
                 }
-                //actuallet get photo
+                //actually get photo
                 downloadedPhoto = UIImage(data: imageData)
                 self.photoCache[reference] = downloadedPhoto
                 }

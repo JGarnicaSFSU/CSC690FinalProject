@@ -36,9 +36,8 @@ class GooglePlace {
         print(json)
         photoReference = json["photos"][0]["photo_reference"].string
         
-        var foundType = "restaurant"
     
-        placeType = foundType
+        placeType = ""
     }
     
     func returnName() -> String {
