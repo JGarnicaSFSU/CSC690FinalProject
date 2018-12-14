@@ -2,7 +2,7 @@
 //  PlaceChoseViewController.swift
 //  Donde
 //
-//  Created by Jesus Garnica on 12/13/18.
+//  Created by Jesus Garnica on 12/11/18.
 //  Copyright © 2018 Jesus Garnica. All rights reserved.
 //
 
@@ -17,12 +17,46 @@ class PlaceChoseViewController:  UIViewController {
     
     @IBOutlet weak var imagePlace: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    var placeChosen = GooglePlace.self
+    var imageToHold = UIImage.self
+    var placeName = ""
+    var markerChose = PlaceMarker?.self
+    var address = ""
+    var aboutTextString = ""
+    var rating = 0.0
+     var ourPlacesArray = [PlaceMarker]()
     @IBOutlet weak var aboutText: UITextView!
     override func viewDidLoad()
     {
        super.viewDidLoad()
-        nameLabel.text = placeChosen.returnName(placeChosen)()
+        let chosenNum = choseRandomPlace()
+        if(ourPlacesArray.count > 0){
+            nameLabel.text = ourPlacesArray[chosenNum].place.name
+            rating  = ourPlacesArray[chosenNum].place.rating ?? 0.0
+            if ourPlacesArray[chosenNum].place.photo != nil{
+                imagePlace.image = ourPlacesArray[chosenNum].place.photo
+            }
+            else
+            {
+                //DO NOT LOAD THE IMAGE. NO CRASHES ALLOWED
+            }
+            address = ourPlacesArray[chosenNum].place.address
+            aboutTextString = "This place has a "+String(rating)+"! And its at "+address
+            aboutText.text = aboutTextString
+        }
+        else{
+            nameLabel.text = "Nothing decent is open!"
+            aboutText.text = ""
+        }
+      
+      
+    }
+    func choseRandomPlace() -> Int {
+        let length = ourPlacesArray.count - 1
+        if(length<0){
+            return -1
+        }
+        let randomNum = Int.random(in: 0 ..< length)
+        return randomNum
     }
     func performSegueToReturnBack()  {
         if let nav = self.navigationController {

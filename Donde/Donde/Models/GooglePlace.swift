@@ -2,7 +2,7 @@
 //  GooglePlace.swift
 //  Donde
 //
-//  Created by Jesus Garnica on 12/13/18.
+//  Created by Jesus Garnica
 //  Copyright © 2018 Jesus Garnica. All rights reserved.
 //
 
@@ -17,6 +17,8 @@ class GooglePlace {
     let address: String
     let coordinate: CLLocationCoordinate2D
     let placeType: String
+    let rating: Double?
+    let open: Bool?
     var photoReference: String?
     var photo: UIImage?
     
@@ -26,10 +28,12 @@ class GooglePlace {
         name = json["name"].stringValue
         address = json["vicinity"].stringValue
         
+            rating = json["rating"].doubleValue
+        open = json["opening_hours"]["open_now"].boolValue
         let lat = json["geometry"]["location"]["lat"].doubleValue as CLLocationDegrees
         let lng = json["geometry"]["location"]["lng"].doubleValue as CLLocationDegrees
         coordinate = CLLocationCoordinate2DMake(lat, lng)
-        
+        print(json)
         photoReference = json["photos"][0]["photo_reference"].string
         
         var foundType = "restaurant"

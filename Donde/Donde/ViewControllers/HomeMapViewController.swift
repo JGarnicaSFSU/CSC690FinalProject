@@ -2,7 +2,7 @@
 //  HomeMapViewController.swift
 //  Donde
 //
-//  Created by Jesus Garnica on 12/13/18.
+//  Created by Jesus Garnica on 12/10/18.
 //  Copyright © 2018 Jesus Garnica. All rights reserved.
 //
 
@@ -28,7 +28,7 @@ class HomeMapViewController: UIViewController {
     @IBAction func pickPressed(_ sender: Any) {
          performSegue(withIdentifier: "placeChosenSegue", sender: self)
     }
-    var places = [GooglePlace]()
+    var placesArray = [PlaceMarker]()
     
     @IBOutlet weak var rangeButton: UIBarButtonItem!
     @IBAction func RefreshPressed(_ sender: Any) {
@@ -39,7 +39,8 @@ class HomeMapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "placeChosenSegue"{
             let vc = segue.destination as? PlaceChoseViewController
-            let vc?.placeChosen = place[0]
+            vc?.ourPlacesArray = placesArray
+           
         }
     }
     
@@ -49,7 +50,7 @@ class HomeMapViewController: UIViewController {
     private var searchRadius: Int = 750  //HOW BIG TO SEARCH
     
     @IBOutlet weak var ourMapView: GMSMapView!
-    var foodTypes = ["bakery", "italian", "cafe", "coffee", "mexican","Food","restaurant"]
+    var foodTypes = ["bakery", "italian", "cafe", "coffee", "mexican","Food","restaurant","tacos","burritos","falafel","bar"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,14 +61,27 @@ class HomeMapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
     }
     private func fetchNearbyPlaces(coordinate: CLLocationCoordinate2D) {
-        
+         self.placesArray.removeAll()
         ourMapView.clear() //Clears pins
         dataProvider.fetchPlacesNearCoordinate(coordinate, radius:Double(searchRadius), types: foodTypes) { places in
             places.forEach {
                 //add pin
-                places.append(places)
+                
                 let marker = PlaceMarker(place: $0)
-                marker.map = self.ourMapView
+                /*
+                    Only the finest places for our users
+                */
+               
+                if let open = marker.place.open , open == true {
+                    if let rating = marker.place.rating , rating > 3.75 {
+                        self.placesArray.append(marker)
+                         marker.map = self.ourMapView
+                    }
+                }
+
+                
+
+               
             }
         }
     }
@@ -98,7 +112,6 @@ extension HomeMapViewController: CLLocationManagerDelegate {
         
        
         ourMapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        showMarker(position: location.coordinate)
         fetchNearbyPlaces(coordinate: location.coordinate)
 
         locationManager.stopUpdatingLocation()
