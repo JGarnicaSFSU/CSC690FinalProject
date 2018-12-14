@@ -36,5 +36,11 @@ class GooglePlace {
     
         placeType = foundType
     }
+    
+    func returnName() -> String {
+        return name
+    }
+    
+
 }
 

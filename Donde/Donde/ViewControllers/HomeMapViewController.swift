@@ -10,21 +10,52 @@ import UIKit
 import GooglePlaces
 import GoogleMaps
 class HomeMapViewController: UIViewController {
-   
+    @IBAction func rangeButtonPressed(_ sender: Any) {
+        if(searchRadius<1500){
+            rangeButton.title = "Farther"
+            searchRadius = 1500;
+        }
+        else{
+            rangeButton.title = "Near"
+            searchRadius = 750
+            
+        }
+       
+        fetchNearbyPlaces(coordinate: ourMapView.camera.target)
+
+        
+    }
+    @IBAction func pickPressed(_ sender: Any) {
+         performSegue(withIdentifier: "placeChosenSegue", sender: self)
+    }
+    var places = [GooglePlace]()
+    
+    @IBOutlet weak var rangeButton: UIBarButtonItem!
     @IBAction func RefreshPressed(_ sender: Any) {
         fetchNearbyPlaces(coordinate: ourMapView.camera.target)
 
     }
+    //getting ready to display place
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "placeChosenSegue"{
+            let vc = segue.destination as? PlaceChoseViewController
+            let vc?.placeChosen = place[0]
+        }
+    }
+    
     private let dataProvider = GoogleDataProvider()
     private let locationManager = CLLocationManager()
    
-    private let searchRadius: Int = 750  //HOW BIG TO SEARCH
+    private var searchRadius: Int = 750  //HOW BIG TO SEARCH
     
     @IBOutlet weak var ourMapView: GMSMapView!
     var foodTypes = ["bakery", "italian", "cafe", "coffee", "mexican","Food","restaurant"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        
+
         locationManager.delegate = self as CLLocationManagerDelegate
         locationManager.requestWhenInUseAuthorization()
     }
@@ -34,6 +65,7 @@ class HomeMapViewController: UIViewController {
         dataProvider.fetchPlacesNearCoordinate(coordinate, radius:Double(searchRadius), types: foodTypes) { places in
             places.forEach {
                 //add pin
+                places.append(places)
                 let marker = PlaceMarker(place: $0)
                 marker.map = self.ourMapView
             }
@@ -42,34 +74,7 @@ class HomeMapViewController: UIViewController {
     
    
 }
-extension HomeMapViewController: GMSMapViewDelegate{
-    /* handles Info Window tap */
-    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        print("didTapInfoWindowOf")
-    }
-    
-    /* handles Info Window long press */
-    func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
-        print("didLongPressInfoWindowOf")
-    }
-    
-    /* set a custom Info Window */
-    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let view = UIView(frame: CGRect.init(x: 0, y: 0, width: 200, height: 70))
-        view.backgroundColor = UIColor.white
-        view.layer.cornerRadius = 6
-        
-        let lbl1 = UILabel(frame: CGRect.init(x: 8, y: 8, width: view.frame.size.width - 16, height: 15))
-        lbl1.text = "Hi there!"
-        view.addSubview(lbl1)
-        let lbl2 = UILabel(frame: CGRect.init(x: lbl1.frame.origin.x, y: lbl1.frame.origin.y + lbl1.frame.size.height + 3, width: view.frame.size.width - 16, height: 15))
-        lbl2.text = "I am a custom info window."
-        lbl2.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        view.addSubview(lbl2)
-        
-        return view
-    }
-}
+
 extension HomeMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -93,7 +98,7 @@ extension HomeMapViewController: CLLocationManagerDelegate {
         
        
         ourMapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        
+        showMarker(position: location.coordinate)
         fetchNearbyPlaces(coordinate: location.coordinate)
 
         locationManager.stopUpdatingLocation()

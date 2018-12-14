@@ -11,6 +11,7 @@
 		6AC0A0F421C317C300C34ADE /* GooglePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0A0F321C317C300C34ADE /* GooglePlace.swift */; };
 		6AC0A0F721C3188800C34ADE /* GoogleDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0A0F621C3188800C34ADE /* GoogleDataWrapper.swift */; };
 		6AC0A0F921C319EB00C34ADE /* PlacePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0A0F821C319EB00C34ADE /* PlacePin.swift */; };
+		6AC0A0FB21C34C8900C34ADE /* PlaceChoseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0A0FA21C34C8900C34ADE /* PlaceChoseViewController.swift */; };
 		6AC2A99A21C3037D00878029 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC2A99921C3037D00878029 /* AppDelegate.swift */; };
 		6AC2A99F21C3037D00878029 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AC2A99D21C3037D00878029 /* Main.storyboard */; };
 		6AC2A9A121C3037F00878029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AC2A9A021C3037F00878029 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		6AC0A0F321C317C300C34ADE /* GooglePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlace.swift; sourceTree = "<group>"; };
 		6AC0A0F621C3188800C34ADE /* GoogleDataWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDataWrapper.swift; sourceTree = "<group>"; };
 		6AC0A0F821C319EB00C34ADE /* PlacePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePin.swift; sourceTree = "<group>"; };
+		6AC0A0FA21C34C8900C34ADE /* PlaceChoseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceChoseViewController.swift; sourceTree = "<group>"; };
 		6AC2A99621C3037D00878029 /* Donde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donde.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AC2A99921C3037D00878029 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AC2A99E21C3037D00878029 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				6A7802F321C307BC00F349A5 /* HomeMapViewController.swift */,
+				6AC0A0FA21C34C8900C34ADE /* PlaceChoseViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				6AC0A0F721C3188800C34ADE /* GoogleDataWrapper.swift in Sources */,
 				6AC0A0F421C317C300C34ADE /* GooglePlace.swift in Sources */,
 				6A7802F421C307BD00F349A5 /* HomeMapViewController.swift in Sources */,
+				6AC0A0FB21C34C8900C34ADE /* PlaceChoseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
