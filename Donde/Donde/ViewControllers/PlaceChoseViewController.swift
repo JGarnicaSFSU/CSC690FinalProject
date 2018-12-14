@@ -29,6 +29,7 @@ class PlaceChoseViewController:  UIViewController {
     {
        super.viewDidLoad()
         let chosenNum = choseRandomPlace()
+        //set our labels and images
         if(ourPlacesArray.count > 0){
             nameLabel.text = ourPlacesArray[chosenNum].place.name
             rating  = ourPlacesArray[chosenNum].place.rating ?? 0.0
@@ -50,6 +51,7 @@ class PlaceChoseViewController:  UIViewController {
       
       
     }
+    //choose the place using chance
     func choseRandomPlace() -> Int {
         let length = ourPlacesArray.count - 1
         if(length<0){
