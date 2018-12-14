@@ -5,11 +5,11 @@ which is really frustrating if you do not want to walk far or want only search f
 
 
 Must-have features:
--Search by Area. (1-3 Hours)
--Be Able to get directions. (1 Hour)
--Order by price and reviews. (2 Hours)
--See details about the place (3 Hours)
--Have a useable UI. (4 Hours)
+-Search by Area. (1-3 Hours) √
+-Be Able to get directions. (1 Hour) 
+-Order by price and reviews. (2 Hours) √
+-See details about the place (3 Hours) √
+-Have a useable UI. (4 Hours) √
 
 Nice-to-have features:
 -Save the place somewhere
